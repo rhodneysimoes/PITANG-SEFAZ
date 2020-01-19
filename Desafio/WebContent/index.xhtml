@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Desafio</title>
+</h:head>
+<h:body>
+
+	<p:growl autoUpdate="true" id="msg" showSummary="true" />
+
+	<p:panelGrid columns="2">
+		<h:form id="formCadastro">
+			<p:panel header="Cadastro">
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="Email:" for="email" />
+					<p:inputText value="#{usuarioBean.usuario.email}" required="true"
+						id="email" requiredMessage="Campo obrigatório"
+						placeholder="Inisira o seu email" title="Email" size="40">
+					</p:inputText>
+
+
+					<p:outputLabel value="Senha:" for="senha" />
+					<p:password value="#{usuarioBean.usuario.senha}" required="true"
+						id="senha" requiredMessage="Campo obrigatório"
+						placeholder="Inisira a sua senha" feedback="true"
+						weakLabel="Senha fraca" goodLabel="Senha razoável"
+						strongLabel="Senha forte" inline="true"
+						promptLabel="Insira uma senha" match="confirma"
+						validatorMessage="Senhas diferentes" />
+
+					<p:outputLabel value="Confirme a senha:" for="confirma" />
+					<p:password id="confirma" required="true"
+						placeholder="Inisira novamente a sua senha" />
+
+
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText value="#{usuarioBean.usuario.nome}" required="true"
+						id="nome" requiredMessage="Campo obrigatório"
+						placeholder="Inisira o seu nome" />
+
+				</p:panelGrid>
+
+				<p></p>
+				<p:commandButton value="Cadastrar" action="#{usuarioBean.inserir}"
+					update="formCadastro" />				
+			</p:panel>
+		</h:form>
+		<h:form id="formLogin">
+			<p:panel header="Login">
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="Email:" for="email_login" />
+					<p:inputText value="#{usuarioBean.usuario.email}" required="true"
+						id="email_login" requiredMessage="Campo obrigatório" size="40"
+						validatorMessage="Email mal formatado">
+
+					</p:inputText>
+
+					<p:outputLabel value="Senha:" for="senha_login" />
+					<p:inputText value="#{usuarioBean.usuario.senha}" required="true"
+						type="password" id="senha_login"
+						requiredMessage="Campo obrigatório" />
+
+				</p:panelGrid>
+				
+				<p></p>
+				<p:commandButton value="Login" action="#{usuarioBean.efetuaLogin}"
+					update="formLogin" />
+					
+			</p:panel>
+		</h:form>
+	</p:panelGrid>
+	<h:form id="banco">
+		<p:commandButton value="Povoar Banco" action="#{usuarioBean.povoar}"
+				 />
+	</h:form>
+</h:body>
+
+</html>
+

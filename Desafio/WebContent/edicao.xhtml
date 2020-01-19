@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Desafio</title>
+</h:head>
+<h:body>
+
+	<p:growl autoUpdate="true" id="msg" showSummary="true" />
+
+	<h:form id="formEdicaoUsuario">
+		<p:panel header="Busca usuário pelo ID">
+			<p:outputLabel value="ID do usuário: " for="idBusca" />
+			<p:inputText value="#{usuarioBean.idBusca}" required="true"
+				id="idBusca" requiredMessage="Campo obrigatório"
+				placeholder="Inisira o id do usuário" title="Email" size="40">
+			</p:inputText>
+			<p:commandButton value="Buscar" action="#{usuarioBean.carregaEdicao}"
+				update="formEdicaoUsuario idBuscaTelefone" />
+		</p:panel>
+		<p:panelGrid columns="2">
+
+			<p:panel header="Edição do usuário">
+				<p:panelGrid columns="2">					
+
+					<p:outputLabel value="ID: " for="idUsuario" />
+					<p:inputText value="#{usuarioBean.usuarioEdicao.id}" id="idUsuario" disabled="true"
+						title="ID">
+					</p:inputText>
+
+					<p:outputLabel value="Email:" for="email" />
+					<p:inputText value="#{usuarioBean.usuarioEdicao.email}" id="email"
+						placeholder="Inisira o seu email" title="Email">
+					</p:inputText>
+
+					<p:outputLabel value="senha:" for="senha" />
+					<p:inputText id="senha" value="#{usuarioBean.usuarioEdicao.senha}"
+						placeholder="Inisira a sua senha" />
+
+
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText value="#{usuarioBean.usuarioEdicao.nome}" id="nome"
+						requiredMessage="Campo obrigatório"
+						placeholder="Inisira o seu nome" />
+
+				</p:panelGrid>
+				<p></p>
+				<p:commandButton value="Atualizar"
+					action="#{usuarioBean.atualizaUsuarioEdicao}"
+					oncomplete="PF('dlg').show()" process="@form" />
+				<p:commandButton value="Remover"
+					action="#{usuarioBean.removeUsuarioEdicao}"
+					update="formEdicaoUsuario "
+					oncomplete="PF('dlg').show()" process="@form" />
+			</p:panel>
+			<p:panel>
+				<p:dataTable var="tel" id="tableTelefonesUsuario"
+					value="#{usuarioBean.telefonesEdicao}">
+
+					<p:column headerText="ID">#{tel.id}</p:column>
+					<p:column headerText="DDD">#{tel.ddd}</p:column>
+					<p:column headerText="Número">#{tel.numero}</p:column>
+					<p:column headerText="Tipo">#{tel.tipo}</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</p:panelGrid>
+		
+		<p:panel header="Busca telefone pelo ID" >
+			<p:outputLabel value="ID: " for="idBuscaTelefone" />
+			<p:inputText value="#{usuarioBean.idBuscaTelefone}"
+				id="idBuscaTelefone" requiredMessage="Campo obrigatório"
+				placeholder="Inisira o id do telefone que deseja inserir/alterar"
+				title="ID telefone">
+			</p:inputText>
+			<p:commandButton value="Buscar"
+				action="#{usuarioBean.carregaTelefoneEdicao}" update="panelTelefone"
+				 process="@form"/>
+		</p:panel>
+		<p:panel header="Insere/Altera os telefones" id="panelTelefone">
+
+			<p:panelGrid columns="2">
+			
+				<p:outputLabel value="ID:" for="idTelefone" />
+				<p:inputNumber value="#{usuarioBean.telefoneEdicao.id}" 
+					id="idTelefone" requiredMessage="Campo obrigatório"
+					decimalPlaces="0" decimalSeparator="" thousandSeparator="" disabled="true"/>
+
+				<p:outputLabel value="DDD:" for="ddd" />
+				<p:inputNumber value="#{usuarioBean.telefoneEdicao.ddd}" 
+					id="ddd" requiredMessage="Campo obrigatório"
+					placeholder="Inisira o DDD" decimalPlaces="0" decimalSeparator="" thousandSeparator="" />
+
+				<p:outputLabel value="Número:" for="numero" />
+				<p:inputText value="#{usuarioBean.telefoneEdicao.numero}" 
+					id="numero" requiredMessage="Campo obrigatório"
+					placeholder="Inisira o número" />
+
+				<p:outputLabel value="Tipo:" for="tipo" />
+				<p:inputText value="#{usuarioBean.telefoneEdicao.tipo}" 
+					id="tipo" requiredMessage="Campo obrigatório"
+					placeholder="Inisira o tipo" />
+
+			</p:panelGrid>
+
+			<p></p>
+			<p:commandButton value="Inserir/Alterar"
+				action="#{usuarioBean.insereAletaraTelefone}" update="tablePessoas tableTelefonesUsuario"
+				/>
+			<p:commandButton value="Remover"
+				action="#{usuarioBean.removeTelefoneEdicao}" update="tablePessoas tableTelefonesUsuario"
+				/>
+		</p:panel>
+	
+		<h1>Lista de Usuários</h1>
+		<p:dataTable var="pes" id="tablePessoas"
+			value="#{usuarioBean.usuarios}">
+
+			<p:column headerText="ID">#{pes.id}</p:column>
+			<p:column headerText="Nome">#{pes.nome}</p:column>
+			<p:column headerText="Email">#{pes.email}</p:column>
+			<p:column headerText="Senha">#{pes.senha}</p:column>
+			<p:column headerText="Telefones" width="600">
+				<p:dataTable var="tel" id="tableTelefone"
+					value="#{usuarioBean.buscaTelefoneUsuario(pes)}">
+
+					<p:column headerText="ID">#{tel.id}</p:column>
+					<p:column headerText="DDD">#{tel.ddd}</p:column>
+					<p:column headerText="Número">#{tel.numero}</p:column>
+					<p:column headerText="Tipo">#{tel.tipo}</p:column>
+
+				</p:dataTable>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+</h:body>
+
+</html>
+
