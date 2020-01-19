@@ -69,6 +69,11 @@ public class UsuarioBean implements Serializable{
         }
     }*/
 
+	public void atualizaListaUsuarios() {
+		usuarios = new ArrayList<Usuario>();
+		usuarios = usuarioEJB.findAll();
+	}
+	
 	public void removeUsuarioEdicao() {
 
 		if(Integer.parseInt(idBusca) > 0) {
@@ -82,6 +87,10 @@ public class UsuarioBean implements Serializable{
 				removeTelefone(tel);
 
 			remover(usua);
+			idBusca = "";
+			usuarioEdicao = new Usuario();
+			usuarios.remove(usua);
+			//atualizaListaUsuarios();
 		}
 
 	}

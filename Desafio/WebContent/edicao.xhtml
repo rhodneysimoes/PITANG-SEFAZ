@@ -16,10 +16,10 @@
 	<h:form id="formEdicaoUsuario">
 		<p:panel header="Busca usuário pelo ID">
 			<p:outputLabel value="ID do usuário: " for="idBusca" />
-			<p:inputText value="#{usuarioBean.idBusca}" required="true"
+			<p:inputNumber value="#{usuarioBean.idBusca}" required="true"
 				id="idBusca" requiredMessage="Campo obrigatório"
-				placeholder="Inisira o id do usuário" title="Email" size="40">
-			</p:inputText>
+				placeholder="Inisira o id do usuário" title="Email" />
+			
 			<p:commandButton value="Buscar" action="#{usuarioBean.carregaEdicao}"
 				update="formEdicaoUsuario idBuscaTelefone" />
 		</p:panel>
@@ -52,23 +52,13 @@
 				<p></p>
 				<p:commandButton value="Atualizar"
 					action="#{usuarioBean.atualizaUsuarioEdicao}"
-					oncomplete="PF('dlg').show()" process="@form" />
+					oncomplete="PF('dlg').show()" process="@form" update="formEdicaoUsuario tablePessoas"/>
 				<p:commandButton value="Remover"
 					action="#{usuarioBean.removeUsuarioEdicao}"
-					update="formEdicaoUsuario "
+					update="tablePessoas"
 					oncomplete="PF('dlg').show()" process="@form" />
 			</p:panel>
-			<p:panel>
-				<p:dataTable var="tel" id="tableTelefonesUsuario"
-					value="#{usuarioBean.telefonesEdicao}">
-
-					<p:column headerText="ID">#{tel.id}</p:column>
-					<p:column headerText="DDD">#{tel.ddd}</p:column>
-					<p:column headerText="Número">#{tel.numero}</p:column>
-					<p:column headerText="Tipo">#{tel.tipo}</p:column>
-
-				</p:dataTable>
-			</p:panel>
+			
 		</p:panelGrid>
 		
 		<p:panel header="Busca telefone pelo ID" >
@@ -110,10 +100,10 @@
 
 			<p></p>
 			<p:commandButton value="Inserir/Alterar"
-				action="#{usuarioBean.insereAletaraTelefone}" update="tablePessoas tableTelefonesUsuario"
+				action="#{usuarioBean.insereAletaraTelefone}" update="tablePessoas"
 				/>
 			<p:commandButton value="Remover"
-				action="#{usuarioBean.removeTelefoneEdicao}" update="tablePessoas tableTelefonesUsuario"
+				action="#{usuarioBean.removeTelefoneEdicao}" update="tablePessoas "
 				/>
 		</p:panel>
 	
