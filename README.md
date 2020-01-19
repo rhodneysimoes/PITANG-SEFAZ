@@ -1,3 +1,5 @@
+Projeto CRUD/Login MAVEN - JSF com Primefaces + EJB + JPA + Wildfly + H2
+
 Configuração do ambiente com Wildfly e H2
 
 //No diretorio do Wildfly acessar a pasta bin e executar jboss-cli e inserir o comando abaixo
